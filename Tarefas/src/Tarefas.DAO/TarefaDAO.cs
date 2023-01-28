@@ -8,7 +8,9 @@ using System.Collections.Generic;
 
 namespace Tarefas.DAO
 {
-    public class TarefaDAO
+    
+
+    public class TarefaDAO : ITarefaDAO
     {
         private string DataSourceFile => Environment.CurrentDirectory + "AppTarefasDB.sqlite";
         public SQLiteConnection Connection => new SQLiteConnection("DataSource=" + DataSourceFile);
@@ -85,15 +87,17 @@ namespace Tarefas.DAO
 
                     @"UPDATE Tarefa
                     SET Titulo = @Titulo, Descricao = @Descricao, Concluida = @Concluida
-                    WHERE Id = @Id;", tarefa 
+                    WHERE Id = @Id;", tarefa
                 );
             }
         }
-        public void Excluir(int id){
-            using(var con = Connection){
+        public void Excluir(int id)
+        {
+            using (var con = Connection)
+            {
                 con.Open();
                 con.Execute(
-                    @"DELETE FROM Tarefa WHERE Id = @Id", new {id}
+                    @"DELETE FROM Tarefa WHERE Id = @Id", new { id }
                 );
             }
         }
